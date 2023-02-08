@@ -3,6 +3,11 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <form asp-controller="Home" asp-action="Cadastro" method="post">
+        <div class="form-group">
+            <label for="form-input-name">Nome</label>
+            <input type="text" name="Name" class="form-control" id="form-input-name" placeholder="Nome">
+        </div>
+        <button type="submit" class="btn btn-primary">Enviar</button>
+    </form>
 </div>
