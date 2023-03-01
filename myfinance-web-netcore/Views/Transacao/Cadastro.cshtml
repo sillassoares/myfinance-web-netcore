@@ -1,0 +1,49 @@
+@model TransacaoModel
+
+@{
+    ViewData["Title"] = "Transações financeiras - Cadastro";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="container">
+
+
+        <form asp-controller="Transacao" asp-action="Cadastro" method="post">
+
+            <div class="mb-3">
+                <div class="form-group">
+                    <label for="form-input-name">Data</label>
+                    <input type="hidden" asp-for="Id" class="form-control" id="form-input-name" />
+                    <input type="date" asp-for="Data" class="form-control" id="form-input-name" placeholder="Data" />
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <div class="form-group">
+                    <label for="form-input-name">Valor</label>
+                    <input type="text" asp-for="Valor" class="form-control" id="form-input-name" placeholder="Valor" />
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <div class="form-group">
+                    <label for="form-input-name">Item</label>
+                    @Html.DropDownListFor(m => m.PlanoContaId, Model.PlanoContas, new { @class="form-control"})
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <div class="form-group">
+                    <label for="form-input-name">Histórico</label>
+                    <input type="text" asp-for="Historico" class="form-control" id="form-input-name" placeholder="Histórico" />
+                </div>
+            </div>
+            <div class="mb-3">
+                <button type="submit" class="btn btn-primary">Registrar</button>
+                <a href="/Transacao" class="btn btn-secondary">Voltar</a>
+            <div>
+        </form>
+
+
+</div>
