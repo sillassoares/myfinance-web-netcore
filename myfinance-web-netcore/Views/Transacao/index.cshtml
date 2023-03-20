@@ -1,30 +1,57 @@
 @{
-    ViewData["Title"] = "Transações financeiras";
+    ViewData["Title"] = "Transações Financeiras";
+    var listaTransacao = ViewBag.Transacoes as List<TransacaoModel>;
 }
 
 <h1>@ViewData["Title"]</h1>
 
-<div>
-    <a href="Transacao/Cadastro" class="btn btn-primary btn-lg">Criar item de Transações financeira</a>
+<a role="button" href="/Transacao/Cadastro" type="button" class="btn btn-primary btn-lg">Registrar Transação</a>
 
-    <table class="table">
-        <thead>
-            <tr>
-            <th scope="col">Id</th>
-            <th scope="col">Descrição</th>
-            <th scope="col">Tipo</th>
-            <th scope="col">#</th>
-            <th scope="col">#</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td><button type="button" class="btn btn-outline-warning">Editar</button></td>
-                <td><button type="button" class="btn btn-outline-danger">Deletar</button></td>
-            </tr>
-        </tbody>
-    </table>
-</div>
+<hr />
+
+<table class="table table-white table-striped">
+    <thead>
+        <tr>
+            <th col">Id</th>
+            <th col">Data</th>
+            <th col">Histórico</th>
+            <th col">Valor</th>
+            <th col">Tipo Operação</th>
+            <th col">Plano Conta</th>
+            <th col"></th>
+            <th col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            foreach (var item in listaTransacao)
+            {
+                                        <tr>
+                                            <td>@item.Id</td>
+                                            <td>@item.Data</td>
+                                            <td>@item.Historico</td>
+                                            <td>@item.Valor</td>
+                                            <td>@item.ItemPlanoConta.Tipo</td>
+                                            <td>@item.ItemPlanoConta.Descricao</td>
+                                            <td>
+                                                <button type="button" class="btn btn-outline-warning"
+                                                    onclick="Editar(@item.Id.ToString())">Editar</button>
+                                            </td>
+                                            <td>
+                                                <button type="button" class="btn btn-outline-danger"
+                                                    onclick="Excluir(@item.Id.ToString())">Excluir</button>
+                                            </td>
+                                        </tr>
+            }
+        }
+    </tbody>
+</table>
+<script>
+    function Editar(id) {
+        window.location.href = "../Transacao/Cadastro/" + id
+    }
+
+    function Excluir(id) {
+        window.location.href = "../Transacao/Excluir/" + id
+    }
+</script>

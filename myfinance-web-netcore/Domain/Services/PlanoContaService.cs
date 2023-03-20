@@ -1,7 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using myfinance_web_netcore.Domain.Entities;
 using myfinance_web_netcore.Domain.Services.Interfaces;
 using myfinance_web_netcore.Models;
 
@@ -11,14 +9,15 @@ namespace myfinance_web_netcore.Domain.Services
     {
         private readonly MyFinanceDBContext _dbContext;
 
-        public PlanoContaService(MyFinanceDBContext dBContext)
+        public PlanoContaService(MyFinanceDBContext dbContext)
         {
-            _dbContext = dBContext;
+            _dbContext = dbContext;
         }
+
         public List<PlanoContaModel> ListarRegistros()
         {
             var result = new List<PlanoContaModel>();
-            var dbSet = _dbContext.PlanoConta;
+            var dbSet = _dbContext.PlanoConta.ToList();
 
             foreach (var item in dbSet)
             {
@@ -28,20 +27,18 @@ namespace myfinance_web_netcore.Domain.Services
                     Descricao = item.Descricao,
                     Tipo = item.Tipo,
                 };
-
                 result.Add(itemPlanoConta);
             }
             return result;
         }
-
         public void Salvar(PlanoContaModel model)
         {
             var dbSet = _dbContext.PlanoConta;
-            var entidade = new PlanoContaModel()
+            var entidade = new PlanoConta()
             {
                 Id = model.Id,
                 Descricao = model.Descricao,
-                Tipo = model.Tipo
+                Tipo = model.Tipo,
             };
 
             if (entidade.Id == null)
@@ -51,26 +48,22 @@ namespace myfinance_web_netcore.Domain.Services
             else
             {
                 dbSet.Attach(entidade);
-                _dbContext.Entry(entidade).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                _dbContext.Entry(entidade).State = EntityState.Modified;
             }
-
             _dbContext.SaveChanges();
         }
 
         public PlanoContaModel RetornarRegistro(int id)
         {
             var item = _dbContext.PlanoConta.Where(x => x.Id == id).First();
-
             var itemPlanoConta = new PlanoContaModel()
             {
                 Id = item.Id,
                 Descricao = item.Descricao,
                 Tipo = item.Tipo,
             };
-
             return itemPlanoConta;
         }
-
         public void Excluir(int id)
         {
             var item = _dbContext.PlanoConta.Where(x => x.Id == id).First();
@@ -80,6 +73,4 @@ namespace myfinance_web_netcore.Domain.Services
             _dbContext.SaveChanges();
         }
     }
-
-
 }

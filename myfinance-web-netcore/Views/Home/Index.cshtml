@@ -2,12 +2,37 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <form asp-controller="Home" asp-action="Cadastro" method="post">
-        <div class="form-group">
-            <label for="form-input-name">Nome</label>
-            <input type="text" name="Name" class="form-control" id="form-input-name" placeholder="Nome">
-        </div>
-        <button type="submit" class="btn btn-primary">Enviar</button>
-    </form>
+<style>
+  .chart-container {
+    width: 500px;
+    height: 500px;
+    margin: auto;
+  }
+</style>
+
+<div class="row justify-content-center">
+    <h1 class="display-4">My finance Web</h1>
+    <p>Controle de Finanças pessoais</p>
+
+    <div class="card chart-container">
+        <canvas id="chart"></canvas>
+    </div>
 </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
+<script>
+    $(document).ready(function () {
+        const ctx = document.getElementById("chart").getContext('2d');
+        const myChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+            labels: ["rice", "yam"],
+            datasets: [{
+                label: 'food Items',
+                data: [30, 40],
+                backgroundColor: ["#0074D9", "#FF4136"]
+            }]
+            },
+        });
+    });
+</script>

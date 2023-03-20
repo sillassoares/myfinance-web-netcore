@@ -1,13 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using myfinance_web_netcore.Domain.Services;
-using myfinance_web_netcore.Domain.Services.Interfaces;
 using myfinance_web_netcore.Models;
+using myfinance_web_netcore.Domain.Services.Interfaces;
 
 namespace myfinance_web_netcore.Controllers
 {
@@ -15,19 +8,19 @@ namespace myfinance_web_netcore.Controllers
     public class PlanoContaController : Controller
     {
         private readonly ILogger<PlanoContaController> _logger;
-        private readonly PlanoContaService _planoContaService;
 
-        public PlanoContaController(ILogger<PlanoContaController> logger, PlanoContaService planoContaService)
+        private readonly IPlanoContaService _planoContaService;
+
+        public PlanoContaController(ILogger<PlanoContaController> logger, IPlanoContaService planoContaservice)
         {
             _logger = logger;
-            _planoContaService = planoContaService;
+            _planoContaService = planoContaservice;
         }
 
         [HttpGet]
-        [Route("")]
+        [Route("Index")]
         public IActionResult Index()
         {
-
             ViewBag.ListaPlanoConta = _planoContaService.ListarRegistros();
             return View();
         }
@@ -37,7 +30,6 @@ namespace myfinance_web_netcore.Controllers
         [Route("Cadastro/{id}")]
         public IActionResult Cadastro(int? id)
         {
-
             if (id != null)
             {
                 var registro = _planoContaService.RetornarRegistro((int)id);
@@ -45,7 +37,6 @@ namespace myfinance_web_netcore.Controllers
             }
             return View();
         }
-
 
         [HttpPost]
         [Route("Cadastro")]
@@ -58,12 +49,10 @@ namespace myfinance_web_netcore.Controllers
 
         [HttpGet]
         [Route("Excluir/{id}")]
-        public IActionResult Excluir(int? id)
+        public IActionResult Excluir(int id)
         {
-            _planoContaService.Excluir((int)id);
+            _planoContaService.Excluir(id);
             return RedirectToAction("Index");
         }
-
-
     }
 }

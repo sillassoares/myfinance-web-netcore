@@ -1,49 +1,37 @@
 @model TransacaoModel
 
 @{
-    ViewData["Title"] = "Transações financeiras - Cadastro";
+    ViewData["Title"] = "Registro de Transação Financeira";
 }
 
-<h1>@ViewData["Title"]</h1>
+<h2>@ViewData["Title"]</h2>
 
-<div class="container">
+<form asp-controller="Transacao" asp-action="Cadastro" method="post">
+    <div class="container">
+        <div class="mb-3">
+            <label class="form-label">Data</label>
+            <input type="hidden" class="form-control" id="Id" asp-for="Id" />
+            <input type="date" class="form-control" id="Data" asp-for="Data" />
+        </div>
 
+        <div class="mb-3">
+            <label class="form-label">Valor</label>
+            <input type="text" class="form-control" id="Valor" asp-for="Valor" step="0.01" />
+        </div>
 
-        <form asp-controller="Transacao" asp-action="Cadastro" method="post">
+        <div class="mb-3">
+            <label class="form-label">Item Plano de Conta</label>
+            @Html.DropDownListFor(m => m.PlanoContaId, Model.PlanoContas, new{@class="form-select"})
+        </div>
 
-            <div class="mb-3">
-                <div class="form-group">
-                    <label for="form-input-name">Data</label>
-                    <input type="hidden" asp-for="Id" class="form-control" id="form-input-name" />
-                    <input type="date" asp-for="Data" class="form-control" id="form-input-name" placeholder="Data" />
-                </div>
-            </div>
+        <div class="mb-3">
+            <label class="form-label">Histórico</label>
+            <input type="text" class="form-control" id="Historico" asp-for="Historico" />
+        </div>
 
-            <div class="mb-3">
-                <div class="form-group">
-                    <label for="form-input-name">Valor</label>
-                    <input type="text" asp-for="Valor" class="form-control" id="form-input-name" placeholder="Valor" />
-                </div>
-            </div>
-
-            <div class="mb-3">
-                <div class="form-group">
-                    <label for="form-input-name">Item</label>
-                    @Html.DropDownListFor(m => m.PlanoContaId, Model.PlanoContas, new { @class="form-control"})
-                </div>
-            </div>
-
-            <div class="mb-3">
-                <div class="form-group">
-                    <label for="form-input-name">Histórico</label>
-                    <input type="text" asp-for="Historico" class="form-control" id="form-input-name" placeholder="Histórico" />
-                </div>
-            </div>
-            <div class="mb-3">
-                <button type="submit" class="btn btn-primary">Registrar</button>
-                <a href="/Transacao" class="btn btn-secondary">Voltar</a>
-            <div>
-        </form>
-
-
-</div>
+        <div>
+            <button type="submit" class="btn btn-primary">Salvar</button>
+            <a role="button" href="/Transacao/Index" type="button" class="btn btn-secondary">Cancelar</a>
+        </div>
+    </div>
+</form>
